@@ -1,12 +1,15 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 
-export default function PeriodType({onSelectPeriod}) {
+interface PeriodTypeProps {
+  onSelectPeriod: (period: string) => void;
+}
+export default function PeriodType({onSelectPeriod}: PeriodTypeProps) {
   const [selectedPeriod, setSelectedPeriod] = useState<string>('');
 
-  const handlePeriodSelect = period => {
-    setSelectedPeriod(period);
-    onSelectPeriod(period);
+  const handlePeriodSelect = (periodValue: string) => {
+    setSelectedPeriod(periodValue);
+    onSelectPeriod(periodValue);
   };
 
   const periods = [
@@ -25,13 +28,13 @@ export default function PeriodType({onSelectPeriod}) {
             key={period.value}
             style={[
               styles.button,
-              selectedPeriod === period.label && styles.selectedButton,
+              selectedPeriod === period.value && styles.selectedButton,
             ]}
-            onPress={() => handlePeriodSelect(period.label)}>
+            onPress={() => handlePeriodSelect(period.value)}>
             <Text
               style={[
                 styles.buttonText,
-                selectedPeriod === period.label && styles.selectedButtonText,
+                selectedPeriod === period.value && styles.selectedButtonText,
               ]}>
               {period.label}
             </Text>

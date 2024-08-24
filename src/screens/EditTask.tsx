@@ -1,14 +1,15 @@
-import Header from '../components/Header';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity, Alert} from 'react-native';
-import PeriodType from '../components/PeriodType';
-import StartingDate from '../components/StartingDate';
-import AddPerson from '../components/AddPerson';
+import Header from '../components/Header';
 import TaskName from '../components/TaskName';
-import TaskRepository from '../repository/TaskRepository';
+import StartingDate from '../components/StartingDate';
+import PeriodType from '../components/PeriodType';
+import AddPerson from '../components/AddPerson';
 import PersonModel from '../models/PersonModel';
+import TaskRepository from '../repository/TaskRepository';
+import TaskModel from '../models/TaskModel';
 
-export default function AddTask(props: any) {
+export default function EditTask({route, navigation}: any) {
   const [taskName, setTaskName] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [selectedPeriod, setSelectedPeriod] = useState<string>('');
@@ -16,24 +17,36 @@ export default function AddTask(props: any) {
 
   const taskRepo = TaskRepository.getInstance();
 
-  const handleAddTask = async () => {
-    if (!taskName || !selectedDate || !selectedPeriod || people.length === 0) {
-      Alert.alert('Eksik Bilgi', 'Lütfen tüm alanları doldurun.', [
-        {text: 'Tamam'},
-      ]);
-      return;
+  useEffect(() => {
+    if (route.params?.task) {
+      const {taskName, selectedDate, selectedPeriod, people} =
+        route.params.task;
+      setTaskName(taskName);
+      setSelectedDate(selectedDate);
+      setSelectedPeriod(selectedPeriod);
+      setPeople(people);
     }
-    ['Home', 'AddNewTask'];
-    const newTask = {
+  }, [route.params?.task]);
+
+  const handleSaveTask = async () => {
+    const task: TaskModel = {
+      id: route.params.task.id,
       taskName,
       selectedDate,
       selectedPeriod,
       people,
     };
-    await taskRepo.addTask({taskName, selectedDate, selectedPeriod, people});
-    props?.route?.params?.addTask?.(newTask);
-    props.navigation.goBack();
+
+    try {
+      await taskRepo.updateTask(task);
+      Alert.alert('Başarılı', 'Görev başarıyla güncellendi.');
+      navigation.goBack();
+    } catch (error) {
+      Alert.alert('Hata', 'Görev güncellenirken bir hata oluştu.');
+      console.error('Görev güncelleme hatası:', error);
+    }
   };
+
   return (
     <View style={styles.container}>
       <Header title="Görevlerim" isGoBackShow={true} />
@@ -52,8 +65,8 @@ export default function AddTask(props: any) {
         />
       </View>
       <View>
-        <TouchableOpacity style={styles.footer} onPress={handleAddTask}>
-          <Text style={styles.footerText}>Ekle</Text>
+        <TouchableOpacity style={styles.footer} onPress={handleSaveTask}>
+          <Text style={styles.footerText}>Kaydet</Text>
         </TouchableOpacity>
       </View>
     </View>

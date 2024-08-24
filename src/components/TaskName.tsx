@@ -1,7 +1,11 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, TextInput, View} from 'react-native';
 
-export default function TaskName({onChangeText, value}) {
+interface TaskNameProps {
+  onChangeText: (text: string) => void;
+  value: string;
+}
+export default function TaskName({onChangeText, value}: TaskNameProps) {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   return (
     <View style={styles.content}>

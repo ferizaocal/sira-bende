@@ -6,16 +6,17 @@ import {
   TouchableOpacity,
   FlatList,
   Alert,
+  Task,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import Header from '../components/Header';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faTrashCan} from '@fortawesome/free-solid-svg-icons';
+import {faPenToSquare, faTrashCan} from '@fortawesome/free-solid-svg-icons';
 import TaskRepository from '../repository/TaskRepository';
+import TaskModel from '../models/TaskModel';
+import PersonModel from '../models/PersonModel';
 
-export default function Home(props: any) {
+export default function Home(props: any, EditTask: any, AddTask: any) {
   const [tasks, setTasks] = useState<any[]>([]);
-
   const taskRepo = TaskRepository.getInstance();
 
   useEffect(() => {
@@ -31,13 +32,21 @@ export default function Home(props: any) {
     taskRepo
       .getTasks()
       .then(res => {
+        setTasks(res);
         console.log(res);
       })
       .catch(er => {
         console.log(`Error: ${er}`);
       });
   };
-  const handleDeleteTask = (index: number) => {
+  const handleDeleteTask = async (task: TaskModel, index: number) => {
+    if (!task.id) {
+      console.error(
+        "Görev ID'si tanımlı değil, silme işlemi gerçekleştirilemez.",
+      );
+      return;
+    }
+
     Alert.alert(
       'Silmek Üzeresiniz',
       'Bu görevi silmek istediğinizden emin misiniz?',
@@ -49,8 +58,16 @@ export default function Home(props: any) {
         },
         {
           text: 'Evet',
-          onPress: () =>
-            setTasks(prevTasks => prevTasks.filter((_, i) => i !== index)),
+          onPress: async () => {
+            try {
+              // id için sadece deleteTask(id:string) olması gerekiyor sen direk modeli istemişssin fakat deleteTask(task.id) yazmışssın o yüzden
+              await taskRepo.deleteTask(task);
+              console.log(`Task with ID: ${task.id} has been deleted`);
+              setTasks(prevTasks => prevTasks.filter((_, i) => i !== index));
+            } catch (error) {
+              console.error('Görev silme hatası:', error);
+            }
+          },
         },
       ],
     );
@@ -74,7 +91,18 @@ export default function Home(props: any) {
                 <View style={styles.taskHeader}>
                   <Text style={styles.taskName}>{item.taskName}</Text>
                   <TouchableOpacity
-                    onPress={() => handleDeleteTask(index)}
+                    onPress={() =>
+                      props.navigation.navigate('EditTask', {task: item})
+                    }
+                    style={styles.editButton}>
+                    <FontAwesomeIcon
+                      icon={faPenToSquare}
+                      size={20}
+                      color="#4F79AD"
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => handleDeleteTask(item, index)}
                     style={styles.deleteButton}>
                     <FontAwesomeIcon
                       icon={faTrashCan}
@@ -93,7 +121,11 @@ export default function Home(props: any) {
                 </Text>
                 <Text style={styles.taskDetail}>
                   <Text style={styles.textDetail}>Kişiler: </Text>
-                  <Text> {item.people.join(', ')}</Text>
+                  <Text>
+                    {item.people
+                      .map((x: PersonModel) => x.personFullName)
+                      .join(', ')}
+                  </Text>
                 </Text>
               </View>
             )}
@@ -103,7 +135,7 @@ export default function Home(props: any) {
 
       <TouchableOpacity
         style={styles.footer}
-        onPress={() => props.navigation.navigate('AddTask', {addTask})}>
+        onPress={() => props.navigation.navigate('AddTask', {AddTask})}>
         <Text style={styles.footerText}>Yeni Görev Ekle</Text>
       </TouchableOpacity>
     </View>
@@ -136,31 +168,37 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 2,
     marginBottom: 16,
-    width: '100%', // Kartın enini sayfanın tamamına yaymak için
-    alignSelf: 'center', // Ortaya hizalamak için
+    width: '100%',
+    alignSelf: 'center',
   },
   taskHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    padding: 10,
   },
   taskName: {
+    flex: 1, // Bu, metnin butonların geri kalan alanı kaplamasını sağlar
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginBottom: 17,
   },
   taskDetail: {
-    flexDirection: 'row', // Metinleri yatayda hizalamak için
-    alignItems: 'center', // Metinleri ortalamak için
+    flexDirection: 'row',
+    alignItems: 'center',
     fontSize: 16,
     color: '#555',
+    marginBottom: 8,
   },
   textDetail: {
-    fontWeight: 'bold', // Kalın metin için
-    marginRight: 5, // İki metin arasına boşluk eklemek için (isteğe bağlı)
+    fontWeight: 'bold',
+    marginRight: 5,
   },
   deleteButton: {
-    padding: 5,
+    marginLeft: 100, // Butonlar arasında boşluk
+  },
+  editButton: {
+    marginLeft: 60, // Butonlar arasında boşluk
   },
   footer: {
     height: 40,

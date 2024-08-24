@@ -10,14 +10,36 @@ import {
 } from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faPlus, faTrashCan} from '@fortawesome/free-solid-svg-icons';
+import PersonModel from '../models/PersonModel';
+import TaskRepository from '../repository/TaskRepository'; // TaskRepository'yi ekleyin
 
-export default function AddPerson({onPeopleChange, people}) {
+interface AddPersonProps {
+  onPeopleChange: (people: PersonModel[]) => void;
+  people: PersonModel[];
+  taskName: string; // Görev ismini bu bileşene prop olarak ekleyin
+}
+export default function AddPerson({
+  onPeopleChange,
+  people,
+  taskName,
+}: AddPersonProps) {
   const [personName, setPersonName] = useState<string>('');
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
+  const taskRepo = TaskRepository.getInstance(); // TaskRepository örneğini alın
+
   const handleAddPerson = () => {
     if (personName.trim()) {
-      const updatedPeople = [...people, personName.trim()];
+      const updatedPeople = [
+        ...people,
+        {
+          id: Math.random().toString(36).substr(2, 9), // Rastgele ID üretelim
+          personFullName: personName.trim(),
+          shareUrl: '',
+          inJoined: false,
+          isStart: false,
+        } as PersonModel,
+      ];
       onPeopleChange(updatedPeople);
       setPersonName('');
     }
@@ -35,9 +57,20 @@ export default function AddPerson({onPeopleChange, people}) {
         },
         {
           text: 'Evet',
-          onPress: () => {
-            const updatedPeople = people.filter((_, i) => i !== index);
-            onPeopleChange(updatedPeople);
+          onPress: async () => {
+            const personToDelete = people[index];
+
+            try {
+              await taskRepo.deletePersonFromTask(taskName, personToDelete.id); // Firestore'dan sil
+              const updatedPeople = people.filter(
+                (a: PersonModel, i: number) => i !== index,
+              );
+              onPeopleChange(updatedPeople);
+              console.log('Kişi başarıyla silindi.');
+            } catch (error) {
+              console.error('Kişi silme hatası:', error);
+              Alert.alert('Hata', 'Kişi silinirken bir hata oluştu.');
+            }
           },
         },
       ],
@@ -62,10 +95,13 @@ export default function AddPerson({onPeopleChange, people}) {
 
       <FlatList
         data={people}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={item => {
+          console.log(item);
+          return item.id ? item.id.toString() : 'defaultKey';
+        }}
         renderItem={({item, index}) => (
           <View style={styles.personCard}>
-            <Text style={styles.personName}>{item}</Text>
+            <Text style={styles.personName}>{item.personFullName}</Text>
             <TouchableOpacity
               onPress={() => handleDeletePerson(index)}
               style={styles.deleteButton}>
