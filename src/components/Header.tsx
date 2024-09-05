@@ -30,14 +30,14 @@ const styles = StyleSheet.create({
   navbar: {
     height: 120,
     width: '100%',
-    backgroundColor: '#4F79AD',
+    backgroundColor: '#61ABF9',
     justifyContent: 'center',
     alignItems: 'center',
   },
   navbarText: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#ddd',
+    color: '#F5EDED',
   },
   backButton: {
     position: 'absolute',

@@ -6,17 +6,22 @@ import {
   TouchableOpacity,
   FlatList,
   Alert,
-  Task,
+  Image,
 } from 'react-native';
 import Header from '../components/Header';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faPenToSquare, faTrashCan} from '@fortawesome/free-solid-svg-icons';
 import TaskRepository from '../repository/TaskRepository';
 import TaskModel from '../models/TaskModel';
 import PersonModel from '../models/PersonModel';
-
-export default function Home(props: any, EditTask: any, AddTask: any) {
+import {periods} from '../components/PeriodType';
+import LottieView from 'lottie-react-native';
+import {TaskManagement2Animation} from '../assets/animations';
+import {Delete6Icon, Edit4Icon} from '../assets/icons';
+import {TaskPopup} from '../components/TaskPopup';
+export default function Home(props: any, AddTask: any) {
   const [tasks, setTasks] = useState<any[]>([]);
+  const [selectedTask, setSelectedTask] = useState<TaskModel | null>(null); // Seçilen görevi tutmak için state
+  const [isPopupVisible, setIsPopupVisible] = useState(false); // Popup kontrolü için state
+
   const taskRepo = TaskRepository.getInstance();
 
   useEffect(() => {
@@ -24,10 +29,6 @@ export default function Home(props: any, EditTask: any, AddTask: any) {
       loadTasks();
     });
   }, []);
-  const addTask = (task: any) => {
-    console.log(task);
-    setTasks(prevTasks => [...prevTasks, task]);
-  };
   const loadTasks = () => {
     taskRepo
       .getTasks()
@@ -60,7 +61,6 @@ export default function Home(props: any, EditTask: any, AddTask: any) {
           text: 'Evet',
           onPress: async () => {
             try {
-              // id için sadece deleteTask(id:string) olması gerekiyor sen direk modeli istemişssin fakat deleteTask(task.id) yazmışssın o yüzden
               await taskRepo.deleteTask(task);
               console.log(`Task with ID: ${task.id} has been deleted`);
               setTasks(prevTasks => prevTasks.filter((_, i) => i !== index));
@@ -72,62 +72,80 @@ export default function Home(props: any, EditTask: any, AddTask: any) {
       ],
     );
   };
+  const handleTaskPress = (task: TaskModel) => {
+    setSelectedTask(task);
+    setIsPopupVisible(true);
+  };
 
+  const closePopup = () => {
+    setIsPopupVisible(false);
+  };
   return (
     <View style={styles.container}>
-      <Header title="Hoşgeldiniz" />
+      <Header title={tasks.length === 0 ? 'Hoşgeldiniz' : 'Görevlerim'} />
 
       <View style={styles.content}>
         {tasks.length === 0 ? (
-          <Text style={styles.text}>
-            Yeni bir görev eklemek için aşağıdaki butona tıklayınız!
-          </Text>
+          <View style={styles.centeredContainer}>
+            <LottieView
+              autoPlay
+              loop
+              style={{height: 300, width: 400}}
+              source={TaskManagement2Animation}
+            />
+            <Text style={styles.text}>
+              Yeni bir görev eklemek için aşağıdaki butona tıklayınız!
+            </Text>
+          </View>
         ) : (
           <FlatList
             data={tasks}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({item, index}) => (
-              <View style={styles.taskCard}>
-                <View style={styles.taskHeader}>
-                  <Text style={styles.taskName}>{item.taskName}</Text>
-                  <TouchableOpacity
-                    onPress={() =>
-                      props.navigation.navigate('EditTask', {task: item})
-                    }
-                    style={styles.editButton}>
-                    <FontAwesomeIcon
-                      icon={faPenToSquare}
-                      size={20}
-                      color="#4F79AD"
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => handleDeleteTask(item, index)}
-                    style={styles.deleteButton}>
-                    <FontAwesomeIcon
-                      icon={faTrashCan}
-                      size={20}
-                      color="#4F79AD"
-                    />
-                  </TouchableOpacity>
-                </View>
-                <Text style={styles.taskDetail}>
-                  <Text style={styles.textDetail}>Başlangıç Tarihi: </Text>
-                  <Text>{item.selectedDate}</Text>
-                </Text>
-                <Text style={styles.taskDetail}>
-                  <Text style={styles.textDetail}>Aralık Tipi: </Text>
-                  <Text> {item.selectedPeriod}</Text>
-                </Text>
-                <Text style={styles.taskDetail}>
-                  <Text style={styles.textDetail}>Kişiler: </Text>
-                  <Text>
-                    {item.people
-                      .map((x: PersonModel) => x.personFullName)
-                      .join(', ')}
+              <TouchableOpacity onPress={() => handleTaskPress(item)}>
+                <View style={styles.taskCard}>
+                  <View style={styles.taskHeader}>
+                    <Text style={styles.taskName}>{item.taskName}</Text>
+                    <TouchableOpacity
+                      onPress={() =>
+                        props.navigation.navigate('EditTask', {task: item})
+                      }
+                      style={styles.editButton}>
+                      <Image
+                        source={Edit4Icon}
+                        style={{height: 25, width: 25}}
+                      />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => handleDeleteTask(item, index)}
+                      style={styles.deleteButton}>
+                      <Image
+                        source={Delete6Icon}
+                        style={{height: 25, width: 25}}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  <Text style={styles.taskDetail}>
+                    <Text style={styles.textDetail}>Başlangıç Tarihi: </Text>
+                    <Text>{item.selectedDate}</Text>
                   </Text>
-                </Text>
-              </View>
+                  <Text style={styles.taskDetail}>
+                    <Text style={styles.textDetail}>Aralık Tipi: </Text>
+                    <Text>
+                      {periods.find(x => x.value == item.selectedPeriod)
+                        ?.label || ''}
+                    </Text>
+                  </Text>
+                  <Text style={styles.taskDetail}>
+                    <Text style={styles.textDetail}>Kişiler: </Text>
+                    <Text>
+                      {item.people
+                        .map((x: PersonModel) => x.personFullName)
+                        .join(', ')}
+                    </Text>
+                  </Text>
+                </View>
+              </TouchableOpacity>
             )}
           />
         )}
@@ -138,6 +156,15 @@ export default function Home(props: any, EditTask: any, AddTask: any) {
         onPress={() => props.navigation.navigate('AddTask', {AddTask})}>
         <Text style={styles.footerText}>Yeni Görev Ekle</Text>
       </TouchableOpacity>
+      {selectedTask && (
+        <TaskPopup
+          visible={isPopupVisible}
+          onClose={closePopup}
+          startDate={selectedTask.selectedDate}
+          periodType={selectedTask.selectedPeriod}
+          people={selectedTask.people}
+        />
+      )}
     </View>
   );
 }
@@ -151,13 +178,16 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    padding: 16,
+  },
+  centeredContainer: {
+    alignItems: 'center',
+    marginTop: 150,
   },
   text: {
     fontSize: 18,
     color: '#333',
     textAlign: 'center',
-    marginTop: 330,
+    marginTop: 30,
   },
   taskCard: {
     backgroundColor: '#fff',
@@ -167,21 +197,20 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
-    marginBottom: 16,
-    width: '100%',
+    marginTop: 20,
+    width: '93%',
     alignSelf: 'center',
   },
   taskHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 10,
   },
   taskName: {
-    flex: 1, // Bu, metnin butonların geri kalan alanı kaplamasını sağlar
+    flex: 1,
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 17,
+    marginBottom: 10,
   },
   taskDetail: {
     flexDirection: 'row',
@@ -195,15 +224,15 @@ const styles = StyleSheet.create({
     marginRight: 5,
   },
   deleteButton: {
-    marginLeft: 100, // Butonlar arasında boşluk
+    flex: 0.1,
   },
   editButton: {
-    marginLeft: 60, // Butonlar arasında boşluk
+    flex: 0.1,
   },
   footer: {
     height: 40,
     width: '90%',
-    backgroundColor: '#4F79AD',
+    backgroundColor: '#007AFF',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 25,

@@ -13,8 +13,13 @@ export default function AddTask(props: any) {
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [selectedPeriod, setSelectedPeriod] = useState<string>('');
   const [people, setPeople] = useState<PersonModel[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const taskRepo = TaskRepository.getInstance();
+
+  const handlePeriodSelect = (period: string) => {
+    setSelectedPeriod(period);
+  };
 
   const handleAddTask = async () => {
     if (!taskName || !selectedDate || !selectedPeriod || people.length === 0) {
@@ -23,20 +28,32 @@ export default function AddTask(props: any) {
       ]);
       return;
     }
-    ['Home', 'AddNewTask'];
-    const newTask = {
-      taskName,
-      selectedDate,
-      selectedPeriod,
-      people,
-    };
-    await taskRepo.addTask({taskName, selectedDate, selectedPeriod, people});
-    props?.route?.params?.addTask?.(newTask);
-    props.navigation.goBack();
+
+    setIsLoading(true);
+
+    try {
+      const newTask = {
+        taskName,
+        selectedDate,
+        selectedPeriod,
+        people,
+      };
+
+      await taskRepo.addTask(newTask);
+
+      props?.route?.params?.addTask?.(newTask);
+      props.navigation.goBack();
+    } catch (error) {
+      console.error('Görev ekleme hatası:', error);
+      Alert.alert('Hata', 'Görev eklenirken bir sorun oluştu.');
+    } finally {
+      setIsLoading(false);
+    }
   };
+
   return (
     <View style={styles.container}>
-      <Header title="Görevlerim" isGoBackShow={true} />
+      <Header title="Görev Ekle" isGoBackShow={true} />
 
       <View style={styles.content}>
         <TaskName onChangeText={setTaskName} value={taskName} />
@@ -44,7 +61,10 @@ export default function AddTask(props: any) {
           selectedDate={selectedDate}
           onDateChange={setSelectedDate}
         />
-        <PeriodType onSelectPeriod={setSelectedPeriod} />
+        <PeriodType
+          selectedPeriod={selectedPeriod}
+          onSelectPeriod={handlePeriodSelect}
+        />
         <AddPerson
           onPeopleChange={setPeople}
           people={people}
@@ -52,8 +72,15 @@ export default function AddTask(props: any) {
         />
       </View>
       <View>
-        <TouchableOpacity style={styles.footer} onPress={handleAddTask}>
-          <Text style={styles.footerText}>Ekle</Text>
+        <TouchableOpacity
+          style={styles.footer}
+          onPress={handleAddTask}
+          disabled={isLoading}>
+          {isLoading ? (
+            <Text style={styles.footerText}>Yükleniyor...</Text>
+          ) : (
+            <Text style={styles.footerText}>Ekle</Text>
+          )}
         </TouchableOpacity>
       </View>
     </View>
@@ -72,7 +99,7 @@ const styles = StyleSheet.create({
   footer: {
     height: 40,
     width: '90%',
-    backgroundColor: '#4F79AD',
+    backgroundColor: '#007AFF',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 25,

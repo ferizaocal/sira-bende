@@ -15,6 +15,10 @@ export default function EditTask({route, navigation}: any) {
   const [selectedPeriod, setSelectedPeriod] = useState<string>('');
   const [people, setPeople] = useState<PersonModel[]>([]);
 
+  const handlePeriodSelect = (period: string) => {
+    setSelectedPeriod(period);
+  };
+
   const taskRepo = TaskRepository.getInstance();
 
   useEffect(() => {
@@ -49,7 +53,7 @@ export default function EditTask({route, navigation}: any) {
 
   return (
     <View style={styles.container}>
-      <Header title="Görevlerim" isGoBackShow={true} />
+      <Header title="Görevi Düzenle" isGoBackShow={true} />
 
       <View style={styles.content}>
         <TaskName onChangeText={setTaskName} value={taskName} />
@@ -57,7 +61,10 @@ export default function EditTask({route, navigation}: any) {
           selectedDate={selectedDate}
           onDateChange={setSelectedDate}
         />
-        <PeriodType onSelectPeriod={setSelectedPeriod} />
+        <PeriodType
+          selectedPeriod={selectedPeriod}
+          onSelectPeriod={handlePeriodSelect}
+        />
         <AddPerson
           onPeopleChange={setPeople}
           people={people}
@@ -85,7 +92,7 @@ const styles = StyleSheet.create({
   footer: {
     height: 40,
     width: '90%',
-    backgroundColor: '#4F79AD',
+    backgroundColor: '#007AFF',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 25,

@@ -9,14 +9,16 @@ import {
   Alert,
 } from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faPlus, faTrashCan} from '@fortawesome/free-solid-svg-icons';
+import {faPlus} from '@fortawesome/free-solid-svg-icons';
 import PersonModel from '../models/PersonModel';
-import TaskRepository from '../repository/TaskRepository'; // TaskRepository'yi ekleyin
+import TaskRepository from '../repository/TaskRepository';
+import LottieView from 'lottie-react-native';
+import {DeleteAnimation} from '../assets/animations';
 
 interface AddPersonProps {
   onPeopleChange: (people: PersonModel[]) => void;
   people: PersonModel[];
-  taskName: string; // Görev ismini bu bileşene prop olarak ekleyin
+  taskName: string;
 }
 export default function AddPerson({
   onPeopleChange,
@@ -26,14 +28,13 @@ export default function AddPerson({
   const [personName, setPersonName] = useState<string>('');
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
-  const taskRepo = TaskRepository.getInstance(); // TaskRepository örneğini alın
+  const taskRepo = TaskRepository.getInstance();
 
   const handleAddPerson = () => {
     if (personName.trim()) {
       const updatedPeople = [
         ...people,
         {
-          id: Math.random().toString(36).substr(2, 9), // Rastgele ID üretelim
           personFullName: personName.trim(),
           shareUrl: '',
           inJoined: false,
@@ -61,7 +62,7 @@ export default function AddPerson({
             const personToDelete = people[index];
 
             try {
-              await taskRepo.deletePersonFromTask(taskName, personToDelete.id); // Firestore'dan sil
+              await taskRepo.deletePersonFromTask(taskName, personToDelete.id);
               const updatedPeople = people.filter(
                 (a: PersonModel, i: number) => i !== index,
               );
@@ -95,17 +96,21 @@ export default function AddPerson({
 
       <FlatList
         data={people}
-        keyExtractor={item => {
-          console.log(item);
-          return item.id ? item.id.toString() : 'defaultKey';
-        }}
+        keyExtractor={(item, index) =>
+          item.id ? item.id.toString() : index.toString()
+        }
         renderItem={({item, index}) => (
           <View style={styles.personCard}>
             <Text style={styles.personName}>{item.personFullName}</Text>
             <TouchableOpacity
               onPress={() => handleDeletePerson(index)}
               style={styles.deleteButton}>
-              <FontAwesomeIcon icon={faTrashCan} size={20} color="#4F79AD" />
+              <LottieView
+                autoPlay
+                loop
+                style={{height: 30, width: 30}}
+                source={DeleteAnimation}
+              />
             </TouchableOpacity>
           </View>
         )}
@@ -145,7 +150,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     height: 46,
     width: 46,
-    backgroundColor: '#4F79AD',
+    backgroundColor: '#007AFF',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 23,
@@ -156,7 +161,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
     borderRadius: 5,
     marginBottom: 10,
     borderColor: '#7FA1C3',
@@ -168,9 +173,6 @@ const styles = StyleSheet.create({
   peopleList: {
     height: 350,
     marginTop: 20,
-    flexGrow: 1,
   },
-  deleteButton: {
-    display: 'flex',
-  },
+  deleteButton: {},
 });

@@ -59,9 +59,9 @@ class TaskRepository {
       if (!taskSnapshot.empty) {
         const taskDoc = taskSnapshot.docs[0];
         const taskData = taskDoc.data();
-        // Mevcut görevdeki kişileri filtreleyerek silme işlemi yapıyoruz
+
         const updatedPeople = taskData.people.filter(
-          (person: PersonModel) => person.id !== id, // Sadece bu ID'ye sahip olmayan kişileri tutuyoruz
+          (person: PersonModel) => person.id !== id,
         );
 
         await taskDoc.ref.update({people: updatedPeople});

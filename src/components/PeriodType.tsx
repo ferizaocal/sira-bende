@@ -1,24 +1,20 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 
 interface PeriodTypeProps {
   onSelectPeriod: (period: string) => void;
+  selectedPeriod: string;
 }
-export default function PeriodType({onSelectPeriod}: PeriodTypeProps) {
-  const [selectedPeriod, setSelectedPeriod] = useState<string>('');
-
-  const handlePeriodSelect = (periodValue: string) => {
-    setSelectedPeriod(periodValue);
-    onSelectPeriod(periodValue);
-  };
-
-  const periods = [
-    {label: 'Yıllık', value: 'yearly'},
-    {label: 'Aylık', value: 'monthly'},
-    {label: 'Haftalık', value: 'weekly'},
-    {label: 'Günlük', value: 'daily'},
-  ];
-
+export const periods = [
+  {label: 'Günlük', value: 'daily'},
+  {label: 'Haftalık', value: 'weekly'},
+  {label: 'Aylık', value: 'monthly'},
+  {label: 'Yıllık', value: 'yearly'},
+];
+export default function PeriodType({
+  onSelectPeriod,
+  selectedPeriod,
+}: PeriodTypeProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Aralık Tipi:</Text>
@@ -30,7 +26,7 @@ export default function PeriodType({onSelectPeriod}: PeriodTypeProps) {
               styles.button,
               selectedPeriod === period.value && styles.selectedButton,
             ]}
-            onPress={() => handlePeriodSelect(period.value)}>
+            onPress={() => onSelectPeriod(period.value)}>
             <Text
               style={[
                 styles.buttonText,
@@ -70,7 +66,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fafafa',
   },
   selectedButton: {
-    backgroundColor: '#4F79AD',
+    backgroundColor: '#007AFF',
     borderColor: '#cccccc',
   },
   buttonText: {
