@@ -17,10 +17,11 @@ import LottieView from 'lottie-react-native';
 import {TaskManagement2Animation} from '../assets/animations';
 import {Delete6Icon, Edit4Icon} from '../assets/icons';
 import {TaskPopup} from '../components/TaskPopup';
+
 export default function Home(props: any, AddTask: any) {
   const [tasks, setTasks] = useState<any[]>([]);
-  const [selectedTask, setSelectedTask] = useState<TaskModel | null>(null); // Seçilen görevi tutmak için state
-  const [isPopupVisible, setIsPopupVisible] = useState(false); // Popup kontrolü için state
+  const [selectedTask, setSelectedTask] = useState<TaskModel | null>(null);
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
 
   const taskRepo = TaskRepository.getInstance();
 
@@ -130,6 +131,10 @@ export default function Home(props: any, AddTask: any) {
                     <Text>{item.selectedDate}</Text>
                   </Text>
                   <Text style={styles.taskDetail}>
+                    <Text style={styles.textDetail}>Bitiş Tarihi: </Text>
+                    <Text>{item.selectedEndDate}</Text>
+                  </Text>
+                  <Text style={styles.taskDetail}>
                     <Text style={styles.textDetail}>Aralık Tipi: </Text>
                     <Text>
                       {periods.find(x => x.value == item.selectedPeriod)
@@ -161,6 +166,7 @@ export default function Home(props: any, AddTask: any) {
           visible={isPopupVisible}
           onClose={closePopup}
           startDate={selectedTask.selectedDate}
+          endDate={selectedTask.selectedEndDate}
           periodType={selectedTask.selectedPeriod}
           people={selectedTask.people}
         />

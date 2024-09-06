@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     color: '#000',
     marginBottom: 15,
-    fontSize: 14,
+    fontSize: 15,
     paddingHorizontal: 10,
   },
   inputFocused: {

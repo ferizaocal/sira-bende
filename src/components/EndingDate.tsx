@@ -34,7 +34,7 @@ LocaleConfig.locales['tr'] = {
 };
 LocaleConfig.defaultLocale = 'tr';
 
-export default function StartingDate({
+export default function EndingDate({
   selectedDate,
   onDateChange,
 }: {
@@ -59,7 +59,7 @@ export default function StartingDate({
 
   return (
     <View>
-      <Text style={styles.text}>Başlangıç Tarihi:</Text>
+      <Text style={styles.text}>Bitiş Tarihi:</Text>
 
       <TouchableOpacity
         onPress={() => setIsCalendarVisible(true)}
@@ -79,7 +79,7 @@ export default function StartingDate({
             {color: selectedDate ? '#000000' : '#939185'},
             {fontSize: selectedDate ? 15 : 12},
           ]}>
-          {selectedDate ? selectedDate : 'Görev Başlangıç Tarihi'}
+          {selectedDate ? selectedDate : 'Görev Bitiş Tarihi'}
         </Text>
       </TouchableOpacity>
 
@@ -129,6 +129,11 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     marginBottom: 15,
   },
+  icon: {
+    marginRight: 7,
+    height: 50,
+    width: 50,
+  },
   inputText: {
     width: 135,
   },
@@ -149,7 +154,7 @@ const styles = StyleSheet.create({
     height: 350,
   },
   closeButton: {
-    marginTop: 20,
+    marginBottom: 10,
     padding: 10,
     borderRadius: 5,
     backgroundColor: '#007AFF',

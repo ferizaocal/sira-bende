@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#cccccc',
     borderRadius: 5,
-    fontSize: 14,
+    fontSize: 15,
     paddingHorizontal: 10,
   },
   inputFocused: {

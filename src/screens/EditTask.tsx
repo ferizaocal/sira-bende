@@ -8,10 +8,12 @@ import AddPerson from '../components/AddPerson';
 import PersonModel from '../models/PersonModel';
 import TaskRepository from '../repository/TaskRepository';
 import TaskModel from '../models/TaskModel';
+import EndingDate from '../components/EndingDate';
 
 export default function EditTask({route, navigation}: any) {
   const [taskName, setTaskName] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<string>('');
+  const [selectedEndDate, setSelectedEndDate] = useState<string>('');
   const [selectedPeriod, setSelectedPeriod] = useState<string>('');
   const [people, setPeople] = useState<PersonModel[]>([]);
 
@@ -23,10 +25,11 @@ export default function EditTask({route, navigation}: any) {
 
   useEffect(() => {
     if (route.params?.task) {
-      const {taskName, selectedDate, selectedPeriod, people} =
+      const {taskName, selectedDate, selectedEndDate, selectedPeriod, people} =
         route.params.task;
       setTaskName(taskName);
       setSelectedDate(selectedDate);
+      setSelectedEndDate(selectedEndDate);
       setSelectedPeriod(selectedPeriod);
       setPeople(people);
     }
@@ -37,6 +40,7 @@ export default function EditTask({route, navigation}: any) {
       id: route.params.task.id,
       taskName,
       selectedDate,
+      selectedEndDate,
       selectedPeriod,
       people,
     };
@@ -57,10 +61,16 @@ export default function EditTask({route, navigation}: any) {
 
       <View style={styles.content}>
         <TaskName onChangeText={setTaskName} value={taskName} />
-        <StartingDate
-          selectedDate={selectedDate}
-          onDateChange={setSelectedDate}
-        />
+        <View style={styles.dateRow}>
+          <StartingDate
+            selectedDate={selectedDate}
+            onDateChange={setSelectedDate}
+          />
+          <EndingDate
+            selectedDate={selectedEndDate}
+            onDateChange={setSelectedEndDate}
+          />
+        </View>
         <PeriodType
           selectedPeriod={selectedPeriod}
           onSelectPeriod={handlePeriodSelect}
@@ -88,6 +98,10 @@ const styles = StyleSheet.create({
   },
   content: {
     margin: 20,
+  },
+  dateRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   footer: {
     height: 40,

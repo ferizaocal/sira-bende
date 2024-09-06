@@ -6,6 +6,7 @@ interface PeriodTypeProps {
   selectedPeriod: string;
 }
 export const periods = [
+  {label: '3 Günde', value: 'inThreeDay'},
   {label: 'Günlük', value: 'daily'},
   {label: 'Haftalık', value: 'weekly'},
   {label: 'Aylık', value: 'monthly'},
