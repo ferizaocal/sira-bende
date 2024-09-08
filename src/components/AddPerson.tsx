@@ -39,7 +39,8 @@ export default function AddPerson({
           shareUrl: '',
           inJoined: false,
           isStart: false,
-        } as PersonModel,
+          isNewAdded: true,
+        } as PersonModel & {isNewAdded: boolean},
       ];
       onPeopleChange(updatedPeople);
       setPersonName('');
@@ -59,15 +60,19 @@ export default function AddPerson({
         {
           text: 'Evet',
           onPress: async () => {
-            const personToDelete = people[index];
-
+            const updatedPeople = people.filter(
+              (a: PersonModel, i: number) => i !== index,
+            );
+            const personToDelete = people[index] as PersonModel & {
+              isNewAdded: boolean;
+            };
+            if (personToDelete.isNewAdded) {
+              onPeopleChange(updatedPeople);
+              return;
+            }
             try {
               await taskRepo.deletePersonFromTask(taskName, personToDelete.id);
-              const updatedPeople = people.filter(
-                (a: PersonModel, i: number) => i !== index,
-              );
               onPeopleChange(updatedPeople);
-              console.log('Kişi başarıyla silindi.');
             } catch (error) {
               console.error('Kişi silme hatası:', error);
               Alert.alert('Hata', 'Kişi silinirken bir hata oluştu.');

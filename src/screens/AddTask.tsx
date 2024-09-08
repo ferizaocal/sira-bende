@@ -49,11 +49,8 @@ export default function AddTask(props: any) {
       };
 
       await taskRepo.addTask(newTask);
-
-      props?.route?.params?.addTask?.(newTask);
       props.navigation.goBack();
     } catch (error) {
-      console.error('Görev ekleme hatası:', error);
       Alert.alert('Hata', 'Görev eklenirken bir sorun oluştu.');
     } finally {
       setIsLoading(false);

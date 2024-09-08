@@ -16,6 +16,7 @@ export default function EditTask({route, navigation}: any) {
   const [selectedEndDate, setSelectedEndDate] = useState<string>('');
   const [selectedPeriod, setSelectedPeriod] = useState<string>('');
   const [people, setPeople] = useState<PersonModel[]>([]);
+  const [originalPeople, setOriginalPeople] = useState<PersonModel[]>([]);
 
   const handlePeriodSelect = (period: string) => {
     setSelectedPeriod(period);
@@ -32,6 +33,7 @@ export default function EditTask({route, navigation}: any) {
       setSelectedEndDate(selectedEndDate);
       setSelectedPeriod(selectedPeriod);
       setPeople(people);
+      setOriginalPeople([...people]);
     }
   }, [route.params?.task]);
 
@@ -47,8 +49,12 @@ export default function EditTask({route, navigation}: any) {
 
     try {
       await taskRepo.updateTask(task);
-      Alert.alert('Başarılı', 'Görev başarıyla güncellendi.');
-      navigation.goBack();
+      Alert.alert('Başarılı', 'Görev başarıyla güncellendi.', [
+        {
+          text: 'Tamam',
+          onPress: () => navigation.goBack(),
+        },
+      ]);
     } catch (error) {
       Alert.alert('Hata', 'Görev güncellenirken bir hata oluştu.');
       console.error('Görev güncelleme hatası:', error);

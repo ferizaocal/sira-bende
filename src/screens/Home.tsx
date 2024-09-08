@@ -18,7 +18,7 @@ import {TaskManagement2Animation} from '../assets/animations';
 import {Delete6Icon, Edit4Icon} from '../assets/icons';
 import {TaskPopup} from '../components/TaskPopup';
 
-export default function Home(props: any, AddTask: any) {
+export default function Home(props: any) {
   const [tasks, setTasks] = useState<any[]>([]);
   const [selectedTask, setSelectedTask] = useState<TaskModel | null>(null);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
@@ -39,7 +39,8 @@ export default function Home(props: any, AddTask: any) {
       })
       .catch(er => {
         console.log(`Error: ${er}`);
-      });
+      })
+      .finally(() => {});
   };
   const handleDeleteTask = async (task: TaskModel, index: number) => {
     if (!task.id) {
@@ -158,7 +159,7 @@ export default function Home(props: any, AddTask: any) {
 
       <TouchableOpacity
         style={styles.footer}
-        onPress={() => props.navigation.navigate('AddTask', {AddTask})}>
+        onPress={() => props.navigation.navigate('AddTask')}>
         <Text style={styles.footerText}>Yeni Görev Ekle</Text>
       </TouchableOpacity>
       {selectedTask && (

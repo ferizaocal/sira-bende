@@ -60,7 +60,6 @@ export default function EndingDate({
   return (
     <View>
       <Text style={styles.text}>Bitiş Tarihi:</Text>
-
       <TouchableOpacity
         onPress={() => setIsCalendarVisible(true)}
         style={[
@@ -69,7 +68,7 @@ export default function EndingDate({
         ]}>
         <LottieView
           autoPlay
-          loop
+          loop={false}
           style={{height: 50, width: 50}}
           source={DateAnimation}
         />

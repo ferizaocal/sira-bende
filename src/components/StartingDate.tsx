@@ -3,7 +3,7 @@ import {Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Calendar, LocaleConfig} from 'react-native-calendars';
 import LottieView from 'lottie-react-native';
 import {DateAnimation} from '../assets/animations';
-
+import dayjs from 'dayjs';
 LocaleConfig.locales['tr'] = {
   monthNames: [
     'Ocak',
@@ -69,7 +69,7 @@ export default function StartingDate({
         ]}>
         <LottieView
           autoPlay
-          loop
+          loop={false}
           style={{height: 50, width: 50}}
           source={DateAnimation}
         />
