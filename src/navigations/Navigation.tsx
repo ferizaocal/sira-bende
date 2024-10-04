@@ -1,8 +1,8 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import Home from './screens/Home';
-import AddTask from './screens/AddTask';
-import EditTask from './screens/EditTask';
+import Home from '../screens/Home';
+import AddTask from '../screens/AddTask';
+import EditTask from '../screens/EditTask';
 
 const Stack = createStackNavigator();
 

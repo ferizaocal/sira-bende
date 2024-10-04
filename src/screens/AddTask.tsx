@@ -8,6 +8,8 @@ import TaskName from '../components/TaskName';
 import TaskRepository from '../repository/TaskRepository';
 import PersonModel from '../models/PersonModel';
 import EndingDate from '../components/EndingDate';
+import LottieView from 'lottie-react-native';
+import {Loading} from '../assets/animations';
 
 export default function AddTask(props: any) {
   const [taskName, setTaskName] = useState<string>('');
@@ -15,7 +17,7 @@ export default function AddTask(props: any) {
   const [selectedPeriod, setSelectedPeriod] = useState<string>('');
   const [selectedEndDate, setSelectedEndDate] = useState<string>('');
   const [people, setPeople] = useState<PersonModel[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const taskRepo = TaskRepository.getInstance();
 
@@ -37,7 +39,7 @@ export default function AddTask(props: any) {
       return;
     }
 
-    setIsLoading(true);
+    setLoading(true);
 
     try {
       const newTask = {
@@ -53,7 +55,7 @@ export default function AddTask(props: any) {
     } catch (error) {
       Alert.alert('Hata', 'Görev eklenirken bir sorun oluştu.');
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
@@ -87,9 +89,16 @@ export default function AddTask(props: any) {
         <TouchableOpacity
           style={styles.footer}
           onPress={handleAddTask}
-          disabled={isLoading}>
-          {isLoading ? (
-            <Text style={styles.footerText}>Yükleniyor...</Text>
+          disabled={loading}>
+          {loading ? (
+            <View style={styles.loadingAnimation}>
+              <LottieView
+                autoPlay
+                loop
+                style={{height: 100, width: 100}}
+                source={Loading}
+              />
+            </View>
           ) : (
             <Text style={styles.footerText}>Ekle</Text>
           )}
@@ -126,5 +135,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#F5EDED',
+  },
+  loadingAnimation: {
+    alignItems: 'center',
+    marginTop: 150,
   },
 });

@@ -14,49 +14,44 @@ import TaskModel from '../models/TaskModel';
 import PersonModel from '../models/PersonModel';
 import {periods} from '../components/PeriodType';
 import LottieView from 'lottie-react-native';
-import {TaskManagement2Animation} from '../assets/animations';
-import {Delete6Icon, Edit4Icon} from '../assets/icons';
+import {Loading, TaskManagamentAnimation} from '../assets/animations';
+import {DeleteIcon, EditIcon} from '../assets/icons';
 import {TaskPopup} from '../components/TaskPopup';
 
 export default function Home(props: any) {
   const [tasks, setTasks] = useState<any[]>([]);
   const [selectedTask, setSelectedTask] = useState<TaskModel | null>(null);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const taskRepo = TaskRepository.getInstance();
 
   useEffect(() => {
-    props.navigation.addListener('focus', () => {
-      loadTasks();
-    });
+    const unsubscribe = props.navigation.addListener('focus', loadTasks);
+    return () => unsubscribe();
   }, []);
+
   const loadTasks = () => {
+    setLoading(true);
     taskRepo
       .getTasks()
       .then(res => {
         setTasks(res);
-        console.log(res);
       })
       .catch(er => {
         console.log(`Error: ${er}`);
       })
-      .finally(() => {});
+      .finally(() => {
+        setLoading(false);
+      });
   };
   const handleDeleteTask = async (task: TaskModel, index: number) => {
-    if (!task.id) {
-      console.error(
-        "Görev ID'si tanımlı değil, silme işlemi gerçekleştirilemez.",
-      );
-      return;
-    }
-
     Alert.alert(
       'Silmek Üzeresiniz',
       'Bu görevi silmek istediğinizden emin misiniz?',
       [
         {
           text: 'Hayır',
-          onPress: () => console.log('Silme işlemi iptal edildi'),
           style: 'cancel',
         },
         {
@@ -64,7 +59,6 @@ export default function Home(props: any) {
           onPress: async () => {
             try {
               await taskRepo.deleteTask(task);
-              console.log(`Task with ID: ${task.id} has been deleted`);
               setTasks(prevTasks => prevTasks.filter((_, i) => i !== index));
             } catch (error) {
               console.error('Görev silme hatası:', error);
@@ -87,13 +81,22 @@ export default function Home(props: any) {
       <Header title={tasks.length === 0 ? 'Hoşgeldiniz' : 'Görevlerim'} />
 
       <View style={styles.content}>
-        {tasks.length === 0 ? (
+        {loading ? (
+          <View style={styles.centeredContainer}>
+            <LottieView
+              autoPlay
+              loop
+              style={{height: 150, width: 150}}
+              source={Loading}
+            />
+          </View>
+        ) : tasks.length === 0 ? (
           <View style={styles.centeredContainer}>
             <LottieView
               autoPlay
               loop
               style={{height: 300, width: 400}}
-              source={TaskManagement2Animation}
+              source={TaskManagamentAnimation}
             />
             <Text style={styles.text}>
               Yeni bir görev eklemek için aşağıdaki butona tıklayınız!
@@ -114,7 +117,7 @@ export default function Home(props: any) {
                       }
                       style={styles.editButton}>
                       <Image
-                        source={Edit4Icon}
+                        source={EditIcon}
                         style={{height: 25, width: 25}}
                       />
                     </TouchableOpacity>
@@ -122,7 +125,7 @@ export default function Home(props: any) {
                       onPress={() => handleDeleteTask(item, index)}
                       style={styles.deleteButton}>
                       <Image
-                        source={Delete6Icon}
+                        source={DeleteIcon}
                         style={{height: 25, width: 25}}
                       />
                     </TouchableOpacity>
@@ -201,8 +204,8 @@ const styles = StyleSheet.create({
     padding: 16,
     borderRadius: 8,
     shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
+    shadowOpacity: 0.2,
+    shadowRadius: 7,
     elevation: 2,
     marginTop: 20,
     width: '93%',
