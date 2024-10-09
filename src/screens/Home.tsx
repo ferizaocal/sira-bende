@@ -159,12 +159,14 @@ export default function Home(props: any) {
           />
         )}
       </View>
+      <View style={styles.footer}>
+        <TouchableOpacity
+          style={styles.footerButton}
+          onPress={() => props.navigation.navigate('AddTask')}>
+          <Text style={styles.footerText}>Yeni Görev Ekle</Text>
+        </TouchableOpacity>
+      </View>
 
-      <TouchableOpacity
-        style={styles.footer}
-        onPress={() => props.navigation.navigate('AddTask')}>
-        <Text style={styles.footerText}>Yeni Görev Ekle</Text>
-      </TouchableOpacity>
       {selectedTask && (
         <TaskPopup
           visible={isPopupVisible}
@@ -188,6 +190,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+    backgroundColor: 'red',
   },
   centeredContainer: {
     alignItems: 'center',
@@ -240,13 +243,16 @@ const styles = StyleSheet.create({
     flex: 0.1,
   },
   footer: {
+    flex: 0.07,
+  },
+  footerButton: {
     height: 40,
     width: '90%',
     backgroundColor: '#007AFF',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 25,
-    marginBottom: 20,
+
     alignSelf: 'center',
   },
   footerText: {

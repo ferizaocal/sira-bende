@@ -73,6 +73,7 @@ export default function AddTask(props: any) {
           <EndingDate
             selectedDate={selectedEndDate}
             onDateChange={setSelectedEndDate}
+            startingDate={selectedDate}
           />
         </View>
         <PeriodType
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 25,
-    marginBottom: 20,
+    top: 32,
     alignSelf: 'center',
   },
   footerText: {

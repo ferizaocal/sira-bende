@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {
   View,
   Text,
@@ -28,7 +28,8 @@ export default function AddPerson({
   const [personName, setPersonName] = useState<string>('');
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
-  const taskRepo = TaskRepository.getInstance();
+  const taskRepo = useMemo(() => TaskRepository.getInstance(), []);
+  //const taskRepo = TaskRepository.getInstance();
 
   const handleAddPerson = () => {
     if (personName.trim()) {
@@ -54,7 +55,6 @@ export default function AddPerson({
       [
         {
           text: 'Hayır',
-          onPress: () => console.log('Silme işlemi iptal edildi'),
           style: 'cancel',
         },
         {
@@ -74,7 +74,6 @@ export default function AddPerson({
               await taskRepo.deletePersonFromTask(taskName, personToDelete.id);
               onPeopleChange(updatedPeople);
             } catch (error) {
-              console.error('Kişi silme hatası:', error);
               Alert.alert('Hata', 'Kişi silinirken bir hata oluştu.');
             }
           },

@@ -28,21 +28,24 @@ export default function Header({
 }
 const styles = StyleSheet.create({
   navbar: {
-    height: 120,
     width: '100%',
     backgroundColor: '#61ABF9',
-    justifyContent: 'center',
+    flexDirection: 'row',
     alignItems: 'center',
+    paddingHorizontal: 20,
   },
   navbarText: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#F5EDED',
+    flex: 1,
+    textAlign: 'center',
+    padding: 15,
   },
   backButton: {
     position: 'absolute',
     left: 20,
-    bottom: 10,
+    bottom: 8,
     padding: 10,
   },
 });

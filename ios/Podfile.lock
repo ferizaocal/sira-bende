@@ -2150,7 +2150,7 @@ PODS:
   - React-Mapbuffer (0.74.3):
     - glog
     - React-debug
-  - react-native-safe-area-context (4.10.8):
+  - react-native-safe-area-context (4.11.0):
     - React-Core
   - React-nativeconfig (0.74.3)
   - React-NativeModulesApple (0.74.3):
@@ -2384,14 +2384,14 @@ PODS:
   - RecaptchaInterop (100.0.0)
   - RNDateTimePicker (8.2.0):
     - React-Core
-  - RNFBApp (20.4.0):
+  - RNFBApp (20.5.0):
     - Firebase/CoreOnly (= 10.29.0)
     - React-Core
-  - RNFBAuth (20.4.0):
+  - RNFBAuth (20.5.0):
     - Firebase/Auth (= 10.29.0)
     - React-Core
     - RNFBApp
-  - RNFBFirestore (20.4.0):
+  - RNFBFirestore (20.5.0):
     - Firebase/Firestore (= 10.29.0)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - React-Core
@@ -2401,7 +2401,7 @@ PODS:
     - FirebaseCoreExtension
     - React-Core
     - RNFBApp
-  - RNGestureHandler (2.17.1):
+  - RNGestureHandler (2.20.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2422,7 +2422,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNScreens (3.32.0):
+  - RNScreens (3.34.0):
     - DoubleConversion
     - glog
     - hermes-engine
@@ -2444,7 +2444,7 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
-  - RNSVG (15.4.0):
+  - RNSVG (15.7.1):
     - React-Core
   - SocketRocket (0.7.0)
   - Yoga (0.0.0)
@@ -2740,7 +2740,7 @@ SPEC CHECKSUMS:
   React-jsitracing: 1aa5681c353b41573b03e0e480a5adf5fa1c56d8
   React-logger: fa92ba4d3a5d39ac450f59be2a3cec7b099f0304
   React-Mapbuffer: 70da5955150a58732e9336a0c7e71cd49e909f25
-  react-native-safe-area-context: b7daa1a8df36095a032dff095a1ea8963cb48371
+  react-native-safe-area-context: 851c62c48dce80ccaa5637b6aa5991a1bc36eca9
   React-nativeconfig: 84806b820491db30175afbf027e99e8415dc63f0
   React-NativeModulesApple: 7b79212f8cf496ab554e0b7b09acbd4aa4690260
   React-perflogger: 7bb9ba49435ff66b666e7966ee10082508a203e8
@@ -2766,16 +2766,16 @@ SPEC CHECKSUMS:
   ReactCommon: 4a09c7d8a06e93c1e2e988a3b9f3db3d2449f2fc
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   RNDateTimePicker: 40ffda97d071a98a10fdca4fa97e3977102ccd14
-  RNFBApp: 2f83756f4d8be2859af5e2cf54130c20e380119d
-  RNFBAuth: ae6e6195e2cf783f8ad1977186925c61358c8ec9
-  RNFBFirestore: c6f4790ed5b6e78da008c906657571be3800270b
+  RNFBApp: 5f87753a8d8b37d229adf85cd0ff37709ffdf008
+  RNFBAuth: ecbb030e0fd3551b8bc36cc85e0ebb1bcfb7685e
+  RNFBFirestore: b12e7d4e6a94e08565638442def454984a06c065
   RNFBMessaging: e6a07a6cc51f38c41613347823d126de13a84162
-  RNGestureHandler: 5538c370587d7e757667b9283ca867dd7635f154
-  RNScreens: fd2722bcc59f36a629205af8cc7b48e4bc0d09f5
-  RNSVG: cb24fb322de8c1ebf59904e7aca0447bb8dbed5a
+  RNGestureHandler: 83fd202dbc0b8971414c5c7c56ddd9f5cde05911
+  RNScreens: db442e7b8c7bc8befec2ce057927305ff8598cc8
+  RNSVG: 4590aa95758149fa27c5c83e54a6a466349a1688
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   Yoga: eed50599a85bd9f6882a9938d118aed6a397db9c
 
-PODFILE CHECKSUM: 97b7501d26faedefb8a805ab58e475345217df01
+PODFILE CHECKSUM: 18c1feba471a99e4a5ef8eea6388d443e762888d
 
-COCOAPODS: 1.13.0
+COCOAPODS: 1.15.2

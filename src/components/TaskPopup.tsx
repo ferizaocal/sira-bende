@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import PersonModel from '../models/PersonModel';
-import moment from 'moment';
+import moment from 'moment'; // moment kütüphanesini ekledik
 
 interface TaskPopupProps {
   visible: boolean;
@@ -27,45 +27,31 @@ export const TaskPopup: React.FC<TaskPopupProps> = ({
   periodType,
   people,
 }) => {
+  const periodMap: Record<string, number> = {
+    daily: 1,
+    weekly: 7,
+    monthly: 30,
+    yearly: 365,
+    inThreeDay: 3,
+  };
+
   const calculateDates = (): {person: string; date: string}[] => {
-    const initialDate = moment(startDate, 'DD.MM.YYYY');
-    const finalDate = moment(endDate, 'DD.MM.YYYY');
+    const initialDate = moment(startDate, 'DD.MM.YYYY'); // moment ile başlangıç tarihi
+    const finalDate = moment(endDate, 'DD.MM.YYYY'); // moment ile bitiş tarihi
     const dateFormat = 'DD.MM.YYYY';
     const results: {person: string; date: string}[] = [];
 
-    let currentDate = initialDate.clone();
+    let currentDate = initialDate.clone(); // yeni bir moment nesnesi oluştur
     let personIndex = 0;
-    let periodDays = 1;
-
-    switch (periodType) {
-      case 'daily':
-        periodDays = 1;
-        break;
-      case 'weekly':
-        periodDays = 7;
-        break;
-      case 'monthly':
-        periodDays = 30;
-        break;
-      case 'yearly':
-        periodDays = 365;
-        break;
-      case 'inThreeDay':
-        periodDays = 3;
-        break;
-      default:
-        periodDays = 1;
-        break;
-    }
+    const periodDays = periodMap[periodType] || 1;
 
     while (currentDate.isSameOrBefore(finalDate)) {
       results.push({
         person: people[personIndex].personFullName,
-        date: currentDate.format(dateFormat),
+        date: currentDate.format(dateFormat), // tarih formatlama
       });
-      currentDate.add(periodDays, 'days');
-
-      personIndex = (personIndex + 1) % people.length;
+      currentDate.add(periodDays, 'days'); // gün ekleme
+      personIndex = (personIndex + 1) % people.length; // kişi döngüsü
     }
 
     return results;
@@ -84,12 +70,30 @@ export const TaskPopup: React.FC<TaskPopupProps> = ({
           <Text style={styles.subtitle}>Kişiler ve Tarihleri</Text>
           <ScrollView style={styles.scrollView}>
             {dates.map((item, index) => (
-              <View key={index} style={styles.tableRow}>
-                <Text style={styles.tableCell}>{item.person}</Text>
-                <Text style={styles.tableCell}>{item.date}</Text>
+              <View
+                key={index}
+                style={[
+                  styles.tableRow,
+                  {backgroundColor: index % 2 === 0 ? '#F1F6F9' : '#61ABF9'},
+                ]}>
+                <Text
+                  style={[
+                    styles.tableCell,
+                    {color: index % 2 === 0 ? '#333' : '#FFFFFF'},
+                  ]}>
+                  {item.person}
+                </Text>
+                <Text
+                  style={[
+                    styles.tableCell,
+                    {color: index % 2 === 0 ? '#333' : '#FFFFFF'},
+                  ]}>
+                  {item.date}
+                </Text>
               </View>
             ))}
           </ScrollView>
+
           <TouchableOpacity onPress={onClose} style={styles.closeButton}>
             <Text style={styles.closeButtonText}>Kapat</Text>
           </TouchableOpacity>
@@ -108,16 +112,17 @@ const styles = StyleSheet.create({
   },
   popupContainer: {
     backgroundColor: 'white',
-    padding: 10,
+    padding: 15,
     borderRadius: 10,
     alignItems: 'center',
-    width: '80%',
-    height: 300,
+    width: 300,
+    height: 400,
   },
   subtitle: {
-    fontSize: 16,
-    marginVertical: 10,
+    fontSize: 18,
+    marginVertical: 12,
     fontWeight: 'bold',
+    color: '#333',
   },
   scrollView: {
     width: '100%',
@@ -126,24 +131,31 @@ const styles = StyleSheet.create({
   tableRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 10,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
-    paddingBottom: 5,
+    marginBottom: 15,
+    padding: 10,
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: {width: 1, height: 4},
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 2,
   },
   tableCell: {
-    fontSize: 14,
+    fontSize: 15,
     color: '#333',
     textAlign: 'center',
+    fontWeight: '500',
   },
   closeButton: {
     marginTop: 20,
     paddingVertical: 10,
-    paddingHorizontal: 20,
+    paddingHorizontal: 30,
     backgroundColor: '#007AFF',
-    borderRadius: 5,
+    borderRadius: 10,
   },
   closeButtonText: {
     color: 'white',
+    fontWeight: 'bold',
+    fontSize: 16,
   },
 });

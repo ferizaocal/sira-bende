@@ -3,7 +3,7 @@ import {Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {Calendar, LocaleConfig} from 'react-native-calendars';
 import LottieView from 'lottie-react-native';
 import {DateAnimation} from '../assets/animations';
-import dayjs from 'dayjs';
+
 LocaleConfig.locales['tr'] = {
   monthNames: [
     'Ocak',
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
   closeButton: {
     marginTop: 20,
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 10,
     backgroundColor: '#007AFF',
   },
   closeButtonText: {

@@ -57,7 +57,6 @@ export default function EditTask({route, navigation}: any) {
       ]);
     } catch (error) {
       Alert.alert('Hata', 'Görev güncellenirken bir hata oluştu.');
-      console.error('Görev güncelleme hatası:', error);
     }
   };
 
@@ -75,6 +74,7 @@ export default function EditTask({route, navigation}: any) {
           <EndingDate
             selectedDate={selectedEndDate}
             onDateChange={setSelectedEndDate}
+            startingDate={selectedDate}
           />
         </View>
         <PeriodType
@@ -116,7 +116,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 25,
-    marginBottom: 20,
+    top: 32,
     alignSelf: 'center',
   },
   footerText: {

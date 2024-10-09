@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {Modal, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Modal,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Alert,
+} from 'react-native';
 import {Calendar, LocaleConfig} from 'react-native-calendars';
 import LottieView from 'lottie-react-native';
 import {DateAnimation} from '../assets/animations';
@@ -19,7 +26,6 @@ LocaleConfig.locales['tr'] = {
     'Kasım',
     'Aralık',
   ],
-
   dayNames: [
     'Pazar',
     'Pazartesi',
@@ -37,14 +43,30 @@ LocaleConfig.defaultLocale = 'tr';
 export default function EndingDate({
   selectedDate,
   onDateChange,
+  startingDate,
 }: {
   selectedDate: string;
   onDateChange: (date: string) => void;
+  startingDate: string;
 }) {
   const [isCalendarVisible, setIsCalendarVisible] = useState<boolean>(false);
 
   const handleDateChange = (day: any) => {
     const formattedDate = formatDate(day.dateString);
+
+    const startDateObj = new Date(startingDate.split('-').reverse().join('-')); // 'dd-mm-yyyy' formatını 'yyyy-mm-dd' formatına çevir
+    const endDateObj = new Date(day.dateString);
+
+    // Bitiş tarihinin geçerli olup olmadığını kontrol et
+    if (endDateObj <= startDateObj) {
+      Alert.alert(
+        'Uyarı',
+        'Bitiş tarihi, başlangıç tarihinden sonra olmalıdır.',
+        [{text: 'Tamam'}],
+      );
+      return;
+    }
+
     onDateChange(formattedDate);
     setIsCalendarVisible(false);
   };
@@ -127,11 +149,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     marginBottom: 15,
-  },
-  icon: {
-    marginRight: 7,
-    height: 50,
-    width: 50,
   },
   inputText: {
     width: 135,

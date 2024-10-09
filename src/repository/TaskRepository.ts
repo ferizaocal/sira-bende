@@ -26,7 +26,6 @@ class TaskRepository {
   public async deleteTask(task: TaskModel): Promise<void> {
     try {
       await this.taskCollection.doc(task.id).delete();
-      console.log(`Task with ID: ${task.id} has been deleted`);
     } catch (error) {
       console.error('Görev silme hatası:', error);
       throw error;
@@ -38,7 +37,6 @@ class TaskRepository {
         throw new Error("Güncellenecek görevin bir ID'si olmalı");
       }
       await this.taskCollection.doc(task.id).update(task);
-      console.log(`Task with ID: ${task.id} has been updated`);
     } catch (error) {
       console.error('Görev güncelleme hatası:', error);
       throw error;
@@ -46,10 +44,6 @@ class TaskRepository {
   }
   async deletePersonFromTask(taskName: string, id: string): Promise<void> {
     try {
-      if (!taskName) {
-        throw new Error('Geçerli bir görev adı gerekli.');
-      }
-
       const taskRef = this.taskCollection
         .where('taskName', '==', taskName)
         .limit(1);
@@ -65,9 +59,6 @@ class TaskRepository {
         );
 
         await taskDoc.ref.update({people: updatedPeople});
-        console.log(
-          `Person with ID: ${id} has been deleted from task: ${taskName}`,
-        );
       }
     } catch (error) {
       console.error('Kişi silme hatası:', error);
