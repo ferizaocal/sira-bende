@@ -161,7 +161,6 @@ const styles = StyleSheet.create({
   },
   personCard: {
     backgroundColor: '#F4F9F9',
-    height: 40,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -172,11 +171,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   personName: {
+    flex: 1,
     fontSize: 16,
   },
   peopleList: {
     height: 350,
     marginTop: 20,
   },
-  deleteButton: {},
+  deleteButton: {
+    flex: 0.06,
+  },
 });

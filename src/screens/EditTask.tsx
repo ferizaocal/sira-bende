@@ -65,30 +65,41 @@ export default function EditTask({route, navigation}: any) {
       <Header title="Görevi Düzenle" isGoBackShow={true} />
 
       <View style={styles.content}>
-        <TaskName onChangeText={setTaskName} value={taskName} />
+        <View style={styles.taskName}>
+          <TaskName onChangeText={setTaskName} value={taskName} />
+        </View>
+
         <View style={styles.dateRow}>
-          <StartingDate
-            selectedDate={selectedDate}
-            onDateChange={setSelectedDate}
-          />
-          <EndingDate
-            selectedDate={selectedEndDate}
-            onDateChange={setSelectedEndDate}
-            startingDate={selectedDate}
+          <View style={styles.startingDate}>
+            <StartingDate
+              selectedDate={selectedDate}
+              onDateChange={setSelectedDate}
+            />
+          </View>
+          <View style={styles.endingDate}>
+            <EndingDate
+              selectedDate={selectedEndDate}
+              onDateChange={setSelectedEndDate}
+              startingDate={selectedDate}
+            />
+          </View>
+        </View>
+        <View style={styles.periodType}>
+          <PeriodType
+            selectedPeriod={selectedPeriod}
+            onSelectPeriod={handlePeriodSelect}
           />
         </View>
-        <PeriodType
-          selectedPeriod={selectedPeriod}
-          onSelectPeriod={handlePeriodSelect}
-        />
-        <AddPerson
-          onPeopleChange={setPeople}
-          people={people}
-          taskName={taskName}
-        />
+        <View style={styles.addPerson}>
+          <AddPerson
+            onPeopleChange={setPeople}
+            people={people}
+            taskName={taskName}
+          />
+        </View>
       </View>
-      <View>
-        <TouchableOpacity style={styles.footer} onPress={handleSaveTask}>
+      <View style={styles.footer}>
+        <TouchableOpacity style={styles.footerButton} onPress={handleSaveTask}>
           <Text style={styles.footerText}>Kaydet</Text>
         </TouchableOpacity>
       </View>
@@ -103,20 +114,44 @@ const styles = StyleSheet.create({
     backgroundColor: '#F1F1F1',
   },
   content: {
-    margin: 20,
+    flex: 0.83,
+    padding: 13,
+  },
+  taskName: {
+    flex: 0.11,
+    marginBottom: 25,
   },
   dateRow: {
+    flex: 0.11,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginBottom: 25,
+  },
+  startingDate: {
+    flex: 1,
+    marginRight: 10,
+  },
+  endingDate: {
+    flex: 1,
+  },
+  periodType: {
+    flex: 0.11,
+    marginBottom: 25,
+  },
+  addPerson: {
+    flex: 0.66,
   },
   footer: {
+    flex: 0.17,
+    justifyContent: 'center',
+  },
+  footerButton: {
     height: 40,
     width: '90%',
     backgroundColor: '#007AFF',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 25,
-    top: 32,
     alignSelf: 'center',
   },
   footerText: {

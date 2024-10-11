@@ -21,13 +21,13 @@ export default function TaskName({onChangeText, value}: TaskNameProps) {
   );
 }
 const styles = StyleSheet.create({
+  content: {},
   text: {
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 5,
     color: '#4F709C',
   },
-  content: {},
   input: {
     height: 46,
     backgroundColor: '#fafafa',
@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
     borderColor: '#cccccc',
     borderRadius: 5,
     color: '#000',
-    marginBottom: 15,
     fontSize: 15,
     paddingHorizontal: 10,
   },

@@ -127,11 +127,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    marginBottom: 15,
   },
-  inputText: {
-    width: 135,
-  },
+  inputText: {},
   modalContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -149,13 +146,15 @@ const styles = StyleSheet.create({
     height: 350,
   },
   closeButton: {
-    marginTop: 20,
+    marginTop: 10,
     padding: 10,
-    borderRadius: 10,
+    width: 100,
+    borderRadius: 25,
     backgroundColor: '#007AFF',
   },
   closeButtonText: {
     color: 'white',
     textAlign: 'center',
+    fontWeight: 'bold',
   },
 });

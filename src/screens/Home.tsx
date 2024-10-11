@@ -118,7 +118,7 @@ export default function Home(props: any) {
                       style={styles.editButton}>
                       <Image
                         source={EditIcon}
-                        style={{height: 25, width: 25}}
+                        style={{height: 25, width: 25, tintColor: '#007AFF'}}
                       />
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -126,7 +126,7 @@ export default function Home(props: any) {
                       style={styles.deleteButton}>
                       <Image
                         source={DeleteIcon}
-                        style={{height: 25, width: 25}}
+                        style={{height: 25, width: 25, tintColor: '#CF0000'}}
                       />
                     </TouchableOpacity>
                   </View>
@@ -166,7 +166,6 @@ export default function Home(props: any) {
           <Text style={styles.footerText}>Yeni Görev Ekle</Text>
         </TouchableOpacity>
       </View>
-
       {selectedTask && (
         <TaskPopup
           visible={isPopupVisible}
@@ -189,18 +188,19 @@ const styles = StyleSheet.create({
     backgroundColor: '#F1F1F1',
   },
   content: {
-    flex: 1,
-    backgroundColor: 'red',
+    flex: 0.92,
   },
   centeredContainer: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 150,
   },
   text: {
-    fontSize: 18,
+    fontSize: 15,
+    fontWeight: 'bold',
     color: '#333',
     textAlign: 'center',
-    marginTop: 30,
+    marginHorizontal: 50,
   },
   taskCard: {
     backgroundColor: '#fff',
@@ -217,7 +217,6 @@ const styles = StyleSheet.create({
   taskHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
   },
   taskName: {
     flex: 1,
@@ -226,9 +225,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   taskDetail: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'center',
-    fontSize: 16,
+    fontSize: 13,
     color: '#555',
     marginBottom: 8,
   },
@@ -240,10 +239,10 @@ const styles = StyleSheet.create({
     flex: 0.1,
   },
   editButton: {
-    flex: 0.1,
+    flex: 0.15,
   },
   footer: {
-    flex: 0.07,
+    flex: 0.08,
   },
   footerButton: {
     height: 40,
@@ -252,7 +251,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 25,
-
     alignSelf: 'center',
   },
   footerText: {

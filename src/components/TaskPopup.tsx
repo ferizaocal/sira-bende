@@ -36,22 +36,22 @@ export const TaskPopup: React.FC<TaskPopupProps> = ({
   };
 
   const calculateDates = (): {person: string; date: string}[] => {
-    const initialDate = moment(startDate, 'DD.MM.YYYY'); // moment ile başlangıç tarihi
-    const finalDate = moment(endDate, 'DD.MM.YYYY'); // moment ile bitiş tarihi
+    const initialDate = moment(startDate, 'DD.MM.YYYY');
+    const finalDate = moment(endDate, 'DD.MM.YYYY');
     const dateFormat = 'DD.MM.YYYY';
     const results: {person: string; date: string}[] = [];
 
-    let currentDate = initialDate.clone(); // yeni bir moment nesnesi oluştur
+    let currentDate = initialDate.clone();
     let personIndex = 0;
     const periodDays = periodMap[periodType] || 1;
 
     while (currentDate.isSameOrBefore(finalDate)) {
       results.push({
         person: people[personIndex].personFullName,
-        date: currentDate.format(dateFormat), // tarih formatlama
+        date: currentDate.format(dateFormat),
       });
-      currentDate.add(periodDays, 'days'); // gün ekleme
-      personIndex = (personIndex + 1) % people.length; // kişi döngüsü
+      currentDate.add(periodDays, 'days');
+      personIndex = (personIndex + 1) % people.length;
     }
 
     return results;
@@ -78,14 +78,14 @@ export const TaskPopup: React.FC<TaskPopupProps> = ({
                 ]}>
                 <Text
                   style={[
-                    styles.tableCell,
+                    styles.tablePerson,
                     {color: index % 2 === 0 ? '#333' : '#FFFFFF'},
                   ]}>
                   {item.person}
                 </Text>
                 <Text
                   style={[
-                    styles.tableCell,
+                    styles.tableDate,
                     {color: index % 2 === 0 ? '#333' : '#FFFFFF'},
                   ]}>
                   {item.date}
@@ -93,10 +93,11 @@ export const TaskPopup: React.FC<TaskPopupProps> = ({
               </View>
             ))}
           </ScrollView>
-
-          <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-            <Text style={styles.closeButtonText}>Kapat</Text>
-          </TouchableOpacity>
+          <View style={styles.footer}>
+            <TouchableOpacity onPress={onClose} style={styles.closeButton}>
+              <Text style={styles.closeButtonText}>Kapat</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     </Modal>
@@ -111,12 +112,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
   popupContainer: {
+    flex: 0.5,
     backgroundColor: 'white',
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
-    width: 300,
-    height: 400,
+    width: 350,
   },
   subtitle: {
     fontSize: 18,
@@ -126,9 +127,10 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     width: '100%',
-    marginTop: 10,
+    flex: 0.3,
   },
   tableRow: {
+    alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 15,
@@ -140,22 +142,34 @@ const styles = StyleSheet.create({
     shadowRadius: 1.41,
     elevation: 2,
   },
-  tableCell: {
-    fontSize: 15,
+  tablePerson: {
+    flex: 3,
+    fontSize: 18,
     color: '#333',
-    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  tableDate: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 13,
+    color: '#333',
     fontWeight: '500',
+    padding: 5,
+  },
+  footer: {
+    flex: 0.1,
+    marginTop: 10,
   },
   closeButton: {
-    marginTop: 20,
-    paddingVertical: 10,
-    paddingHorizontal: 30,
+    marginHorizontal: 10,
+    padding: 10,
+    width: 100,
+    borderRadius: 25,
     backgroundColor: '#007AFF',
-    borderRadius: 10,
   },
   closeButtonText: {
     color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
+    textAlign: 'center',
   },
 });

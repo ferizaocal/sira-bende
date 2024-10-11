@@ -47,20 +47,18 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 5,
     color: '#4F709C',
   },
   buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 15,
     gap: 10,
   },
   button: {
     flex: 1,
     alignItems: 'center',
-    paddingVertical: 8,
-
+    paddingVertical: 12,
     borderWidth: 1,
     borderColor: '#cccccc',
     borderRadius: 5,
@@ -76,5 +74,6 @@ const styles = StyleSheet.create({
   },
   selectedButtonText: {
     color: '#fafafa',
+    fontWeight: 'bold',
   },
 });
