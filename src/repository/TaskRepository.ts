@@ -2,6 +2,7 @@ import firestore from '@react-native-firebase/firestore';
 import Collection from '../firebase/Collection';
 import TaskModel from '../models/TaskModel';
 import PersonModel from '../models/PersonModel';
+import auth from '@react-native-firebase/auth';
 class TaskRepository {
   private static instance: TaskRepository;
   private taskCollection = firestore().collection(Collection.TASKS);
@@ -17,13 +18,29 @@ class TaskRepository {
   async addTask(task: TaskModel) {
     const docId = this.taskCollection.doc().id;
     task.id = docId;
-    return this.taskCollection.doc(docId).set(task);
+
+    const userId = auth().currentUser?.uid;
+    if (userId) {
+      task.userId = userId;
+      return this.taskCollection.doc(docId).set(task);
+    } else {
+      throw new Error('User is not authenticated');
+    }
   }
+
   async getTasks(): Promise<TaskModel[]> {
-    let taskSnapShot = await this.taskCollection.get();
+    const userId = auth().currentUser?.uid;
+    if (!userId) {
+      throw new Error('User is not authenticated');
+    }
+
+    let taskSnapShot = await this.taskCollection
+      .where('userId', '==', userId)
+      .get();
     return taskSnapShot.docs.map(doc => doc.data() as TaskModel);
   }
-  public async deleteTask(task: TaskModel): Promise<void> {
+
+  async deleteTask(task: TaskModel): Promise<void> {
     try {
       await this.taskCollection.doc(task.id).delete();
     } catch (error) {
@@ -31,7 +48,8 @@ class TaskRepository {
       throw error;
     }
   }
-  public async updateTask(task: TaskModel): Promise<void> {
+
+  async updateTask(task: TaskModel): Promise<void> {
     try {
       if (!task.id) {
         throw new Error("Güncellenecek görevin bir ID'si olmalı");
@@ -42,6 +60,7 @@ class TaskRepository {
       throw error;
     }
   }
+
   async deletePersonFromTask(taskName: string, id: string): Promise<void> {
     try {
       const taskRef = this.taskCollection
