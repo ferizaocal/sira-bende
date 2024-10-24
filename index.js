@@ -12,6 +12,7 @@ LogBox.ignoreAllLogs();
 GoogleSignin.configure({
   webClientId:
     '1087596863866-vplab4vnbavhnfo3u7ovbncer2d87set.apps.googleusercontent.com',
+  offlineAccess: true,
 });
 
 AppRegistry.registerComponent(appName, () => App);

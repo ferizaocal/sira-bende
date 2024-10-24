@@ -2,7 +2,17 @@ import {faAngleLeft} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {useNavigation} from '@react-navigation/native';
 import React from 'react';
-import {SafeAreaView, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {
+  Alert,
+  Image,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from 'react-native';
+import auth from '@react-native-firebase/auth';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {LogoutIcon} from '../assets/icons';
 
 export default function Header({
   title,
@@ -12,6 +22,32 @@ export default function Header({
   isGoBackShow?: boolean;
 }) {
   const navigation = useNavigation();
+
+  const signOut = async () => {
+    Alert.alert(
+      'Çıkış Yap',
+      'Hesabınızdan çıkış yapmak istediğinize emin misiniz?',
+      [
+        {
+          text: 'Hayır',
+          style: 'cancel',
+        },
+        {
+          text: 'Evet',
+          onPress: async () => {
+            try {
+              await auth().signOut();
+              await GoogleSignin.signOut();
+              navigation.navigate('Login');
+            } catch (error) {
+              console.error('Çıkış işlemi başarısız oldu:', error);
+            }
+          },
+        },
+      ],
+      {cancelable: false},
+    );
+  };
 
   return (
     <SafeAreaView style={styles.navbar}>
@@ -23,6 +59,13 @@ export default function Header({
           <FontAwesomeIcon icon={faAngleLeft} color="white" />
         </TouchableOpacity>
       )}
+
+      <TouchableOpacity style={styles.logoutButton} onPress={signOut}>
+        <Image
+          source={LogoutIcon}
+          style={{height: 35, width: 35, tintColor: '#fff'}}
+        />
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
@@ -40,12 +83,15 @@ const styles = StyleSheet.create({
     color: '#F5EDED',
     flex: 1,
     textAlign: 'center',
-    padding: 15,
+    paddingLeft: 50,
   },
   backButton: {
     position: 'absolute',
     left: 20,
     bottom: 8,
-    padding: 10,
+  },
+  logoutButton: {
+    flex: 0.15,
+    bottom: 3,
   },
 });
