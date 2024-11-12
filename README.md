@@ -48,9 +48,9 @@ Bu projeyi yerel ortamınızda çalıştırmak için aşağıdaki adımları tak
 
 ## **Lisans**
 
-Bu proje MIT Lisansı ile lisanslanmıştır.
+Bu proje **MIT Lisansı** ile lisanslanmıştır.
 
 ## **Yazarlar**
 
-- Feriza Nur Öcal - Proje geliştiricisi
-- Projeyle ilgili herhangi bir sorunuz varsa, lütfen ferizaocal60@gmail.com adresinden benimle iletişime geçin.
+- **Feriza Nur Öcal** - Proje geliştiricisi
+- Projeyle ilgili herhangi bir sorunuz varsa, lütfen **ferizaocal60@gmail.com** adresinden benimle iletişime geçin.
