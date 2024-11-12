@@ -2,6 +2,8 @@
 
 Sıra Bende, kullanıcıların görevleri sırasıyla birbirlerine devretmesini sağlayan bir görev yönetim uygulamasıdır. Her kullanıcıya belirli bir görev atanır ve bu görevlerin sırası, seçilen periyot tipine göre otomatik olarak düzenlenir. Uygulama, Firebase ile veritabanı yönetimi sağlar ve React Native ile mobil platformlarda çalışır.
 
+![Sıra Bende Demo](assets/gif/sira-bende-demo.gif)
+
 ## Özellikler
 
 - **Görev oluşturma**: Kullanıcılar, görev adı, başlangıç tarihi, bitiş tarihi, periyot tipi ve katılımcılar ekleyebilir.
