@@ -8,7 +8,7 @@ Sıra Bende, kullanıcıların görevleri sırasıyla birbirlerine devretmesini 
 - **Görev listeleme ve silme**: Kullanıcılar görevlerini listeleyebilir ve silebilir.
 - **Görev düzenleme**: Mevcut görevlerin bilgileri düzenlenebilir.
 - **Kullanıcılar arası görev dağılımı**: Görevler, katılımcılar arasında belirli bir periyoda göre sırasıyla dağıtılır.
-- **Push bildirimleri**: Görev atanmış olan kullanıcıya bildirim gönderilir.
+- **Push bildirimleri**: Kullanıcıya bildirim gönderilir.
 
 ## Kullanılan Teknolojiler ve Kütüphaneler
 
