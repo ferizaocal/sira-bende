@@ -5,7 +5,9 @@ import React from 'react';
 import {
   Alert,
   Image,
+  Platform,
   SafeAreaView,
+  StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -50,23 +52,26 @@ export default function Header({
   };
 
   return (
-    <SafeAreaView style={styles.navbar}>
-      <Text style={styles.navbarText}>{title}</Text>
-      {isGoBackShow && (
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}>
-          <FontAwesomeIcon icon={faAngleLeft} color="white" />
-        </TouchableOpacity>
-      )}
+    <>
+      <StatusBar backgroundColor="#61ABF9" />
+      <SafeAreaView style={styles.navbar}>
+        <Text style={styles.navbarText}>{title}</Text>
+        {isGoBackShow && (
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => navigation.goBack()}>
+            <FontAwesomeIcon icon={faAngleLeft} color="white" />
+          </TouchableOpacity>
+        )}
 
-      <TouchableOpacity style={styles.logoutButton} onPress={signOut}>
-        <Image
-          source={LogoutIcon}
-          style={{height: 35, width: 35, tintColor: '#fff'}}
-        />
-      </TouchableOpacity>
-    </SafeAreaView>
+        <TouchableOpacity style={styles.logoutButton} onPress={signOut}>
+          <Image
+            source={LogoutIcon}
+            style={{height: 35, width: 35, tintColor: '#fff'}}
+          />
+        </TouchableOpacity>
+      </SafeAreaView>
+    </>
   );
 }
 const styles = StyleSheet.create({
@@ -76,6 +81,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 20,
+    paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight / 2 : 0,
   },
   navbarText: {
     fontSize: 20,
