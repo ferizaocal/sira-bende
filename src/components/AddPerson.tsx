@@ -98,12 +98,8 @@ export default function AddPerson({
         </TouchableOpacity>
       </View>
 
-      <FlatList
-        data={people}
-        keyExtractor={(item, index) =>
-          item.id ? item.id.toString() : index.toString()
-        }
-        renderItem={({item, index}) => (
+      {people.map((item, index) => {
+        return (
           <View style={styles.personCard}>
             <Text style={styles.personName}>{item.personFullName}</Text>
             <TouchableOpacity
@@ -111,15 +107,14 @@ export default function AddPerson({
               style={styles.deleteButton}>
               <LottieView
                 autoPlay
-                loop
+                loop={false}
                 style={{height: 30, width: 30}}
                 source={DeleteAnimation}
               />
             </TouchableOpacity>
           </View>
-        )}
-        contentContainerStyle={styles.peopleList}
-      />
+        );
+      })}
     </View>
   );
 }
@@ -136,6 +131,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 5,
+    marginBottom: 25,
   },
   input: {
     flex: 1,

@@ -80,7 +80,7 @@ export default function EndingDate({
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.text}>Bitiş Tarihi:</Text>
       <TouchableOpacity
         onPress={() => setIsCalendarVisible(true)}
@@ -134,6 +134,8 @@ export default function EndingDate({
 }
 
 const styles = StyleSheet.create({
+  container: {},
+
   text: {
     fontSize: 16,
     fontWeight: 'bold',
@@ -149,7 +151,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
-  inputText: {},
+  inputText: {
+    flexDirection: 'row',
+  },
   modalContainer: {
     flex: 1,
     justifyContent: 'center',

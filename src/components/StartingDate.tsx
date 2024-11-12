@@ -58,7 +58,7 @@ export default function StartingDate({
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.text}>Başlangıç Tarihi:</Text>
 
       <TouchableOpacity
@@ -113,6 +113,7 @@ export default function StartingDate({
 }
 
 const styles = StyleSheet.create({
+  container: {},
   text: {
     fontSize: 16,
     fontWeight: 'bold',
@@ -128,7 +129,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
-  inputText: {},
+  inputText: {
+    flexDirection: 'row',
+  },
   modalContainer: {
     flex: 1,
     justifyContent: 'center',

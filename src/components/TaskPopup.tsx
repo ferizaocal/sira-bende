@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import PersonModel from '../models/PersonModel';
-import moment from 'moment'; // moment kütüphanesini ekledik
+import moment from 'moment';
 
 interface TaskPopupProps {
   visible: boolean;
@@ -112,12 +112,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
   popupContainer: {
-    flex: 0.5,
     backgroundColor: 'white',
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
     width: 350,
+    height: 500,
   },
   subtitle: {
     fontSize: 18,
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 1, height: 4},
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
-    elevation: 2,
+    elevation: 5,
   },
   tablePerson: {
     flex: 3,
@@ -164,6 +164,7 @@ const styles = StyleSheet.create({
   closeButton: {
     marginHorizontal: 10,
     padding: 10,
+    height: 40,
     width: 100,
     borderRadius: 25,
     backgroundColor: '#007AFF',
@@ -171,5 +172,6 @@ const styles = StyleSheet.create({
   closeButtonText: {
     color: 'white',
     textAlign: 'center',
+    justifyContent: 'center',
   },
 });

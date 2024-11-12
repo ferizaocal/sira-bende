@@ -10,6 +10,7 @@ import PersonModel from '../models/PersonModel';
 import EndingDate from '../components/EndingDate';
 import LottieView from 'lottie-react-native';
 import {Loading} from '../assets/animations';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 export default function AddTask(props: any) {
   const [taskName, setTaskName] = useState<string>('');
@@ -62,8 +63,10 @@ export default function AddTask(props: any) {
   return (
     <View style={styles.container}>
       <Header title="Görev Ekle" isGoBackShow={true} />
-
-      <View style={styles.content}>
+      <KeyboardAwareScrollView
+        enableOnAndroid={true}
+        extraScrollHeight={100}
+        contentContainerStyle={styles.content}>
         <View style={styles.taskName}>
           <TaskName onChangeText={setTaskName} value={taskName} />
         </View>
@@ -83,12 +86,14 @@ export default function AddTask(props: any) {
             />
           </View>
         </View>
+
         <View style={styles.periodType}>
           <PeriodType
             selectedPeriod={selectedPeriod}
             onSelectPeriod={handlePeriodSelect}
           />
         </View>
+
         <View style={styles.addPerson}>
           <AddPerson
             onPeopleChange={setPeople}
@@ -96,7 +101,8 @@ export default function AddTask(props: any) {
             taskName={taskName}
           />
         </View>
-      </View>
+      </KeyboardAwareScrollView>
+
       <View style={styles.footer}>
         <TouchableOpacity
           style={styles.footerButton}
@@ -119,44 +125,35 @@ export default function AddTask(props: any) {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
     backgroundColor: '#F1F1F1',
   },
   content: {
-    flex: 0.83,
     padding: 13,
   },
   taskName: {
-    flex: 0.11,
     marginBottom: 25,
   },
   dateRow: {
-    flex: 0.11,
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 25,
   },
   startingDate: {
-    flex: 1,
-    marginRight: 10,
+    flex: 0.49,
   },
   endingDate: {
-    flex: 1,
+    flex: 0.46,
   },
   periodType: {
-    flex: 0.11,
     marginBottom: 25,
   },
-  addPerson: {
-    flex: 0.66,
-  },
+  addPerson: {},
   footer: {
-    flex: 0.17,
     justifyContent: 'center',
+    marginBottom: 30,
   },
   footerButton: {
     height: 40,

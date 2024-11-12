@@ -7,7 +7,7 @@ interface PeriodTypeProps {
 }
 export const periods = [
   {label: 'Günlük', value: 'daily'},
-  {label: '3 Günde', value: 'inThreeDay'},
+  // {label: '3 Günde', value: 'inThreeDay'},
   {label: 'Haftalık', value: 'weekly'},
   {label: 'Aylık', value: 'monthly'},
   {label: 'Yıllık', value: 'yearly'},

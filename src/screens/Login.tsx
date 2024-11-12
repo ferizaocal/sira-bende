@@ -93,7 +93,9 @@ export default function Login(props: any) {
           resizeMode="contain"
         />
       </View>
-
+      <View style={styles.headerText}>
+        <Text style={styles.headerTextStyle}>Sıra Kimde? Hemen Öğren!</Text>
+      </View>
       <View style={styles.socialMediaContainer}>
         {Platform.OS === 'ios' && (
           <TouchableOpacity
@@ -133,7 +135,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerContainer: {
-    flex: 0.5,
+    flex: 0.6,
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -147,16 +149,19 @@ const styles = StyleSheet.create({
     aspectRatio: 1,
   },
   headerText: {
+    flex: 0.05,
+  },
+  headerTextStyle: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#000',
     textAlign: 'center',
-    marginBottom: 20,
   },
   socialMediaContainer: {
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
+    flex: 0.2,
   },
   socialButton: {
     width: '80%',

@@ -9,6 +9,7 @@ import PersonModel from '../models/PersonModel';
 import TaskRepository from '../repository/TaskRepository';
 import TaskModel from '../models/TaskModel';
 import EndingDate from '../components/EndingDate';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 export default function EditTask({route, navigation}: any) {
   const [taskName, setTaskName] = useState<string>('');
@@ -64,7 +65,11 @@ export default function EditTask({route, navigation}: any) {
     <View style={styles.container}>
       <Header title="Görevi Düzenle" isGoBackShow={true} />
 
-      <View style={styles.content}>
+      <KeyboardAwareScrollView
+        keyboardDismissMode="on-drag"
+        keyboardShouldPersistTaps="handled"
+        enableOnAndroid={true}
+        contentContainerStyle={styles.content}>
         <View style={styles.taskName}>
           <TaskName onChangeText={setTaskName} value={taskName} />
         </View>
@@ -97,7 +102,7 @@ export default function EditTask({route, navigation}: any) {
             taskName={taskName}
           />
         </View>
-      </View>
+      </KeyboardAwareScrollView>
       <View style={styles.footer}>
         <TouchableOpacity style={styles.footerButton} onPress={handleSaveTask}>
           <Text style={styles.footerText}>Kaydet</Text>
@@ -110,40 +115,33 @@ export default function EditTask({route, navigation}: any) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
     backgroundColor: '#F1F1F1',
   },
   content: {
-    flex: 0.83,
     padding: 13,
   },
   taskName: {
-    flex: 0.11,
     marginBottom: 25,
   },
   dateRow: {
-    flex: 0.11,
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 25,
   },
   startingDate: {
-    flex: 1,
+    flex: 0.48,
     marginRight: 10,
   },
   endingDate: {
-    flex: 1,
+    flex: 0.48,
   },
   periodType: {
-    flex: 0.11,
     marginBottom: 25,
   },
-  addPerson: {
-    flex: 0.66,
-  },
+  addPerson: {},
   footer: {
-    flex: 0.17,
     justifyContent: 'center',
+    marginBottom: 30,
   },
   footerButton: {
     height: 40,
