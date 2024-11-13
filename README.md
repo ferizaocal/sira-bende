@@ -21,7 +21,7 @@ Sıra Bende, kullanıcıların görevleri sırasıyla birbirlerine devretmesini 
 - **Firebase**: Gerçek zamanlı veritabanı ve kimlik doğrulama servisi.
 - **React Navigation**: Uygulama içi sayfa geçişleri için kullanılan yönlendirme kütüphanesi.
 - **Lottie React Native**: Uygulama içi animasyonları entegre etmek için kullanılan kütüphane.
-- **Moment.js & Dayjs**: Tarih ve saat işlemleri için kullanılan kütüphaneler.
+- **Dayjs**: Tarih ve saat işlemleri için kullanılan kütüphaneler.
 - **FontAwesome**: Uygulamada ikonlar kullanmak için kullanılan kütüphane.
 - **React Native Firebase**: Firebase ile entegrasyon için kullanılan kütüphane.
 - **Google Sign-In**: Google ile kullanıcı giriş işlemleri.
@@ -40,7 +40,7 @@ Bu projeyi yerel ortamınızda çalıştırmak için aşağıdaki adımları tak
 1. **Depoyu klonlayın**:
    git clone https://github.com/ferizaocal/sira-bende.git
 
-2. **Bağımlılıkları yükleyin: Projenin bulunduğu klasöre gidin ve bağımlılıkları yüklemek için aşağıdaki komutu çalıştırın**:
+2. **Bağımlılıkları yükleyin**:
    npm install
 
 3. **Proje çalıştırın**:
