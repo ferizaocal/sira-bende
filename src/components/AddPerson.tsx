@@ -100,7 +100,7 @@ export default function AddPerson({
 
       {people.map((item, index) => {
         return (
-          <View style={styles.personCard}>
+          <View key={item.id || index} style={styles.personCard}>
             <Text style={styles.personName}>{item.personFullName}</Text>
             <TouchableOpacity
               onPress={() => handleDeletePerson(index)}
