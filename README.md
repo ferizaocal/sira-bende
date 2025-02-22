@@ -16,22 +16,22 @@ Sıra Bende is a task management application that allows users to delegate tasks
 
 ## ⚒️ Technologies Used
 
-✅ React Native 
-✅ TypeScript
-✅ Firebase
-✅ React Navigation
-✅ Lottie React Native
-✅ Dayjs
-✅ FontAwesome
-✅ React Native Firebase
-✅ Google Sign-In
-✅ Apple Authentication
-✅ React Native Modal DateTime Picker
-✅ React Native AsyncStorage
-✅ React Native Gesture Handler
-✅ React Native SVG
-✅ React Native Dropdown Picker
-✅ React Native Safe Area Context 
+- ✅ React Native  
+- ✅ TypeScript  
+- ✅ Firebase  
+- ✅ React Navigation  
+- ✅ Lottie React Native  
+- ✅ Dayjs  
+- ✅ FontAwesome  
+- ✅ React Native Firebase  
+- ✅ Google Sign-In  
+- ✅ Apple Authentication  
+- ✅ React Native Modal DateTime Picker  
+- ✅ React Native AsyncStorage  
+- ✅ React Native Gesture Handler  
+- ✅ React Native SVG  
+- ✅ React Native Dropdown Picker  
+- ✅ React Native Safe Area Context  
 
 ## 🛠️ Install (dev)
 
