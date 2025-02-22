@@ -3,7 +3,7 @@
 Sıra Bende is a task management application that allows users to delegate tasks to each other in sequence. Each user is assigned a specific task, and the order of these tasks is automatically arranged according to the selected period type. The application manages the database with Firebase and runs on React Native for mobile platforms.
 
 <p align="center">
-  <img src="src/assets/gif/sira-bende-demo.gif" width="250" height="700" alt="Sıra Bende Demo" />
+  <img src="src/assets/gif/sira-bende-demo.gif" width="250" height="500" alt="Sıra Bende Demo" />
 </p>
 
 ## 📱 Mobile Features
@@ -16,7 +16,7 @@ Sıra Bende is a task management application that allows users to delegate tasks
 
 ## ⚒️ Technologies Used
 
-✅ React Native
+✅ React Native 
 ✅ TypeScript
 ✅ Firebase
 ✅ React Navigation
@@ -31,7 +31,7 @@ Sıra Bende is a task management application that allows users to delegate tasks
 ✅ React Native Gesture Handler
 ✅ React Native SVG
 ✅ React Native Dropdown Picker
-✅ React Native Safe Area Context
+✅ React Native Safe Area Context 
 
 ## 🛠️ Install (dev)
 
