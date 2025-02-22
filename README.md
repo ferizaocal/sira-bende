@@ -1,60 +1,59 @@
 # Sıra Bende
 
-Sıra Bende, kullanıcıların görevleri sırasıyla birbirlerine devretmesini sağlayan bir görev yönetim uygulamasıdır. Her kullanıcıya belirli bir görev atanır ve bu görevlerin sırası, seçilen periyot tipine göre otomatik olarak düzenlenir. Uygulama, Firebase ile veritabanı yönetimi sağlar ve React Native ile mobil platformlarda çalışır.
+Sıra Bende is a task management application that allows users to delegate tasks to each other in sequence. Each user is assigned a specific task, and the order of these tasks is automatically arranged according to the selected period type. The application manages the database with Firebase and runs on React Native for mobile platforms.
 
 <p align="center">
-  <img src="src/assets/gif/sira-bende-demo.gif" width="550" height="900" alt="Sıra Bende Demo" />
+  <img src="src/assets/gif/sira-bende-demo.gif" width="250" height="700" alt="Sıra Bende Demo" />
 </p>
 
-## Özellikler
+## 📱 Mobile Features
 
-- **Görev oluşturma**: Kullanıcılar, görev adı, başlangıç tarihi, bitiş tarihi, periyot tipi ve katılımcılar ekleyebilir.
-- **Görev listeleme ve silme**: Kullanıcılar görevlerini listeleyebilir ve silebilir.
-- **Görev düzenleme**: Mevcut görevlerin bilgileri düzenlenebilir.
-- **Kullanıcılar arası görev dağılımı**: Görevler, katılımcılar arasında belirli bir periyoda göre sırasıyla dağıtılır.
-- **Push bildirimleri**: Kullanıcıya bildirim gönderilir.
+- **Task Creation**: Users can add a task name, start date, end date, period type, and participants.
+- **Task Listing and Deletion**: Users can list and delete their tasks.
+- **Task Editing**: Existing task details can be modified.
+- **Task Distribution Among Users**: Tasks are assigned to participants sequentially based on the selected period type.
+- **Push Notifications**: Notifications are sent to users.
 
-## Kullanılan Teknolojiler ve Kütüphaneler
+## ⚒️ Technologies Used
 
-- **React Native**: Mobil uygulama geliştirme framework'ü.
-- **TypeScript**: Tip güvenliği sağlayan JavaScript üzerine kurulu dil.
-- **Firebase**: Gerçek zamanlı veritabanı ve kimlik doğrulama servisi.
-- **React Navigation**: Uygulama içi sayfa geçişleri için kullanılan yönlendirme kütüphanesi.
-- **Lottie React Native**: Uygulama içi animasyonları entegre etmek için kullanılan kütüphane.
-- **Dayjs**: Tarih ve saat işlemleri için kullanılan kütüphaneler.
-- **FontAwesome**: Uygulamada ikonlar kullanmak için kullanılan kütüphane.
-- **React Native Firebase**: Firebase ile entegrasyon için kullanılan kütüphane.
-- **Google Sign-In**: Google ile kullanıcı giriş işlemleri.
-- **Apple Authentication**: Apple ile oturum açma için kullanılan kütüphane.
-- **React Native Modal DateTime Picker**: Tarih ve saat seçici modallar.
-- **React Native AsyncStorage**: Uygulama içinde basit veri depolama.
-- **React Native Gesture Handler**: Kullanıcı etkileşimlerini yönetmek için kullanılan kütüphane.
-- **React Native SVG**: SVG görsellerini uygulamaya entegre etmek için kullanılan kütüphane.
-- **React Native Dropdown Picker**: Dropdown menü oluşturma için kullanılan kütüphane.
-- **React Native Safe Area Context**: Güvenli alan yönetimi için kullanılan kütüphane.
+✅ React Native
+✅ TypeScript
+✅ Firebase
+✅ React Navigation
+✅ Lottie React Native
+✅ Dayjs
+✅ FontAwesome
+✅ React Native Firebase
+✅ Google Sign-In
+✅ Apple Authentication
+✅ React Native Modal DateTime Picker
+✅ React Native AsyncStorage
+✅ React Native Gesture Handler
+✅ React Native SVG
+✅ React Native Dropdown Picker
+✅ React Native Safe Area Context
 
-## Kurulum
+## 🛠️ Install (dev)
 
-Bu projeyi yerel ortamınızda çalıştırmak için aşağıdaki adımları takip edebilirsiniz:
+To run this project in your local environment, follow the steps below:
 
-1. **Depoyu klonlayın**:
+```sh
    git clone https://github.com/ferizaocal/sira-bende.git
 
-2. **Bağımlılıkları yükleyin**:
    npm install
 
-3. **Proje çalıştırın**:
    npm start
 
-   **iOS için**: npm run ios
+   npm run ios
 
-   **Android için**: npm run android
+   npm run android
+```
 
-## **Lisans**
+## **License**
 
-Bu proje **MIT Lisansı** ile lisanslanmıştır.
+This project is licensed under the **MIT License**.
 
-## **Yazarlar**
+## **Authors**
 
-- **Feriza Nur Öcal** - Proje geliştiricisi
-- Projeyle ilgili herhangi bir sorunuz varsa, lütfen **ferizaocal60@gmail.com** adresinden benimle iletişime geçin.
+- **Feriza Nur Öcal** - Project Developer
+- If you have any questions about the project, please feel free to contact me at **ferizaocal60@gmail.com** 
